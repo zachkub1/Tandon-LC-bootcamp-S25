@@ -1,0 +1,76 @@
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def isPalindrome(self, head):
+        """
+        :type head: Optional[ListNode]
+        :rtype: bool
+        """
+        stack = []
+        q = deque()
+        curr = head
+        while curr:
+            stack.append(curr.val)
+            q.append(curr.val)
+            curr = curr.next
+
+        while stack and q:
+            if stack.pop() != q.popleft():
+                return False
+        return True
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def reorderList(self, head):
+        """
+        :type head: Optional[ListNode]
+        :rtype: None Do not return anything, modify head in-place instead.
+        """
+        slow, fast = head, head
+        while fast and fast.next and fast.next.next:
+            slow = slow.next
+            fast = fast.next.next
+        
+        prev, curr = None, slow.next
+        slow.next = None
+        while curr:
+            curr.next, prev, curr = prev, curr, curr.next
+        
+        while prev:
+            temp2 = head.next
+            head.next = prev
+            temp3 = prev.next
+            prev.next = temp2
+            head = temp2
+            prev = temp3
+
+class Solution(object):    
+    def setZeroes(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: None Do not return anything, modify matrix in-place instead.
+        """
+
+        r = len(matrix)
+        c = len(matrix[0])
+        zero_row = [False] * r
+        zero_col = [False] * c
+
+        for y in range(r):
+            for x in range(c):
+                if matrix[y][x] == 0:
+                    zero_row[y] = True
+                    zero_col[x] = True
+
+        for y in range(r):
+             for x in range(c):
+                 if zero_row[y] or zero_col[x]:
+                     matrix[y][x] = 0
+        
